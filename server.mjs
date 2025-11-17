@@ -7,6 +7,13 @@ app.use(cors());
 app.use(express.json());
 
 // ----------------------
+// ROOT ROUTE (fixes "Cannot GET /")
+// ----------------------
+app.get("/", (req, res) => {
+  res.send("RealRecruitScraper API is running. Use /scrape to fetch data.");
+});
+
+// ----------------------
 // SAME FUNCTION
 // ----------------------
 function timeStringToSeconds(str) {
@@ -47,7 +54,7 @@ function timeStringToSeconds(str) {
 }
 
 // -------------------------------------
-// API ROUTE — http://localhost:4000/scrape
+// API ROUTE — /scrape
 // -------------------------------------
 app.get("/scrape", async (req, res) => {
   let browser;
@@ -107,7 +114,9 @@ app.get("/scrape", async (req, res) => {
       }
 
       const sections = [];
-      const eventBlocks = Array.from(document.querySelectorAll("div.row.gender_m"));
+      const eventBlocks = Array.from(
+        document.querySelectorAll("div.row.gender_m")
+      );
 
       for (const block of eventBlocks) {
         const headerEl = block.querySelector("h3.font-weight-500");
@@ -124,11 +133,14 @@ app.get("/scrape", async (req, res) => {
 
         for (const row of rows) {
           const name =
-            row.querySelector('.col-athlete[data-label="Athlete"]')?.textContent.trim() || "";
+            row.querySelector('.col-athlete[data-label="Athlete"]')
+              ?.textContent.trim() || "";
           const classYear =
-            row.querySelector('.col-narrow[data-label="Year"]')?.textContent.trim() || "";
+            row.querySelector('.col-narrow[data-label="Year"]')
+              ?.textContent.trim() || "";
           const prStr =
-            row.querySelector('.col-narrow[data-label="Time"]')?.textContent.trim() || "";
+            row.querySelector('.col-narrow[data-label="Time"]')
+              ?.textContent.trim() || "";
 
           if (!name || !prStr) continue;
           const seconds = timeStringToSeconds(prStr);
@@ -165,7 +177,11 @@ app.get("/scrape", async (req, res) => {
   }
 });
 
-// START SERVER ON PORT 4000
-app.listen(4000, () => {
-  console.log("API running on http://localhost:4000");
+// ----------------------
+// START SERVER (Render needs process.env.PORT)
+// ----------------------
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`API running on port ${PORT}`);
 });
+
