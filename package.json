@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node server.mjs",
-    "postinstall": "npx puppeteer browsers install chrome"
+    "start": "node server.mjs"
   },
   "dependencies": {
     "express": "^4.19.0",
     "cors": "^2.8.5",
-    "puppeteer": "^22.10.0"
+    "puppeteer-core": "^23.0.0",
+    "@sparticuz/chromium-min": "^127.0.0"
   }
 }
+
