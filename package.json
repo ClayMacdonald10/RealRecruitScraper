@@ -1,15 +1,14 @@
 {
-  "name": "tfrrs-scraper",
+  "name": "realrecruitscraper",
   "version": "1.0.0",
   "type": "module",
-  "main": "server.mjs",
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "postinstall": "npx puppeteer browsers install chrome"
   },
   "dependencies": {
+    "express": "^4.19.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "puppeteer": "^24.30.0"
+    "puppeteer": "^22.10.0"
   }
 }
-
